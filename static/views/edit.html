@@ -1,0 +1,48 @@
+<div class="wrap boxed edit-view">
+
+    <label>Store id</label><input ng-model="exhibit.title" type="text">
+    <select data-ng-model="exhibit.store" ng-options="item as item.name for item in stores"></select>
+    <hr>
+
+    <div ng-repeat="piece in exhibit.content">
+        <label>Scan:</label><button><img src="static/assets/camera.png"/ alt="scanner" width="25px" height="20px"></button><br>
+        <label>Product name</label><input ng-model="piece.title" type="text"><br>
+        <label>Calculation input</label><input type="text" name="calculation" ng-model="piece.Ahuzim">
+        <br>
+        <form><label>Shelf empty</label><input type="radio" ng-model="piece.empty" name="empty" value="Yes" > Yes<input type="radio" ng-model="piece.empty" name="empty" value="No" checked > No</form>
+        <button ng-click="deletePiece(piece.temp_id)">Delete this part</button>
+
+        <hr>
+
+    </div>
+
+    <div class="manage">
+
+        <button ng-click="addPiece()">Add another piece of content</button>
+
+        <br>
+
+        <!--<label>Upload video from Youtube channel</label><select ng-model="newYoutubeLink" ng-change="newYoutubePiece(newYoutubeLink)">
+            <option ng-repeat="(videoIdx, video) in youtubeVideos"
+                    value="{{videoIdx}}"
+                    ng-if="video.id.kind == 'youtube#video'">
+                {{video.snippet.title}}
+            </option>
+        </select><br>
+        <label>Get piece from audio resources </label><select ng-model="newAudioFile" ng-change="newAudioPiece(newAudioFile)">
+            <option ng-repeat="(resourceIdx, resource) in audioResources"
+                    value="{{resourceIdx}}">
+                {{resource[0]['Title']}}
+            </option>
+        </select>-->
+
+        <hr>
+
+         <p ng-if="exhibit._id"><a ui-sref="view({id: exhibit._id})">Preview public view</a> | <a ui-sref="print({id: exhibit._id})">Preview QR & print</a> | <a ui-sref="list">Back to listing</a></p>
+        <button ng-if="!new" ng-click="saveExhibit()">Save</button>
+        <button ng-if="new" ng-click="newExhibit()">Save</button>
+        <p>{{statusMessage}}</p>
+
+    </div>
+
+</div>
