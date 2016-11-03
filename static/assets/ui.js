@@ -68,8 +68,6 @@ var pms = angular.module('qrms', ['ui.router'])
   $rootScope.loggedIn = false; // login flag
   $rootScope.currentUserName; // the user string? id or object could be in some other variable
 
-  console.log();
-
   $rootScope.auth = function(){
     if(!$http.defaults.headers.common.Authorization){
       $state.go("login");
@@ -103,114 +101,6 @@ var pms = angular.module('qrms', ['ui.router'])
 .controller('ListCtrl', ['$scope', '$rootScope', '$state', 'restcli', function($scope, $rootScope, $state, restcli) {
 
   //$rootScope.auth();
-  var takePicture;
-  var item_id;
-
-    $scope.scanImage = function () {
-console.log("Kulta BEBE!! HEUREKA!");
-takePicture = document.querySelector("#shoot");
-
-var showPicture = document.createElement("img");
-    Result = document.querySelector("#error_scan");
-    var canvas = document.getElementById("barcode_image");
-    var ctx = canvas.getContext("2d");
-    JOB.Init();
-
-
-    JOB.SetImageCallback(function(result) {
-      console.log("Starting image callback");
-      if(result.length > 0){
-        var tempArray = [];
-        for(var i = 0; i < result.length; i++) {
-          tempArray.push(result[i].Value);
-        }
-
-                  // Scanned ID
-        var id = tempArray.join();
-        console.log(id);
-        $("input#search-1").val(id);
-                  // If the page is main
-        if($.mobile.path.get() == "" || $.mobile.path.get() == "to_choose") {
-          console.log("JUPPOOO!!");
-          // If the new ID is not equal to active id
-                      if(id != item_id){
-                          // Change the value of the search input
-                          $("input#search-1").val(id);
-console.log("HERE IT IS")
-                          console.log(id);
-                          // Trigger the app.getSendData function (js/main.js)
-                          //app.getSendData(id);
-                      }
-        }
-
-      } else {
-        if(result.length === 0) {
-          Result.innerHTML="Decoding failed.";
-        }
-      }
-    });
-
-
-    JOB.PostOrientation = true;
-    JOB.OrientationCallback = function(result) {
-      canvas.width = result.width;
-      canvas.height = result.height;
-      var data = ctx.getImageData(0,0,canvas.width,canvas.height);
-      for(var i = 0; i < data.data.length; i++) {
-        data.data[i] = result.data[i];
-      }
-      ctx.putImageData(data,0,0);
-    };
-
-
-    JOB.SwitchLocalizationFeedback(true);
-    JOB.SetLocalizationCallback(function(result) {
-      ctx.beginPath();
-      ctx.lineWIdth = "2";
-      ctx.strokeStyle="red";
-      for(var i = 0; i < result.length; i++) {
-        ctx.rect(result[i].x,result[i].y,result[i].width,result[i].height);
-      }
-      ctx.stroke();
-    });
-
-
-    if(takePicture && showPicture) {
-      takePicture.onchange = function (event) {
-        var files = event.target.files;
-        if (files && files.length > 0) {
-          file = files[0];
-          try {
-            var URL = window.URL || window.webkitURL;
-            showPicture.onload = function(event) {
-              Result.innerHTML="";
-              JOB.DecodeImage(showPicture);
-              URL.revokeObjectURL(showPicture.src);
-            };
-            showPicture.src = URL.createObjectURL(file);
-          }
-          catch (e) {
-            try {
-              var fileReader = new FileReader();
-              fileReader.onload = function (event) {
-                showPicture.onload = function(event) {
-                  Result.innerHTML="";
-                  console.log("filereader");
-                  JOB.DecodeImage(showPicture);
-                };
-                showPicture.src = event.target.result;
-              };
-              fileReader.readAsDataURL(file);
-            }
-            catch (e) {
-              Result.innerHTML = "Neither createObjectURL or FileReader are supported";
-            }
-          }
-        }
-      };
-    }
-
-}
 
 
 
@@ -236,16 +126,142 @@ console.log("HERE IT IS")
 .controller('EditCtrl', ['$scope', '$rootScope', '$state', 'restcli', function($scope, $rootScope, $state, restcli) {
 
   //$rootScope.auth();
+  var takePicture;
+  var item_id;
+  var x = 0;
+  var nana;
+    $scope.scanImage = function () {
+takePicture = document.querySelector(".shoot");
+document.getElementById("imggg").style.display = "none";
+var showPicture = document.createElement("img");
+    Result = document.querySelector("#error_scan");
+    var canvas = document.getElementById("barcode_image");
+    var ctx = canvas.getContext("2d");
+    JOB.Init();
+    JOB.SetImageCallback(function(result) {
+      console.log("Starting image callback");
+      if(result.length > 0){
+        var tempArray = [];
+        for(var i = 0; i < result.length; i++)
+        {
+          tempArray.push(result[i].Value);
+        }
+
+                  // Scanned ID
+        var id = tempArray.join();
+        console.log(id);
+        if (id == 7316970152117)
+        {
+          document.getElementById("lambiwc").style.display = "block";
+          document.getElementById("lambik").style.display = "none";
+          nana = "Lambi wc-paperi 6 rl";
+          $("#Pname").val(nana);
+        }
+        else if(id == 6414301011049)
+        {
+          nana= "Lambi talouspaperi 3 rl ";
+          document.getElementById("lambik").style.display = "block";
+          document.getElementById("lambiwc").style.display = "none";
+          $("#Pname").val(nana);
+        }
+                  // If the page is main
+        /*if($.mobile.path.get() == "" || $.mobile.path.get() == "to_choose") {
+          console.log("JUPPOOO!!");
+          // If the new ID is not equal to active id
+                      if(id != item_id){
+                          // Change the value of the search input
+                          $("input#search-1").val(id);
+console.log("HERE IT IS")
+                          console.log(id);
+                          // Trigger the app.getSendData function (js/main.js)
+                          //app.getSendData(id);
+                      }
+        }*/
+
+      } else {
+        if(result.length === 0) {
+          Result.innerHTML="Decoding failed.";
+        }
+      }
+    });
+
+
+    JOB.PostOrientation = true;
+    JOB.OrientationCallback = function(result) {
+            console.log("Starting OrientationCallback");
+      canvas.width = result.width;
+      canvas.height = result.height;
+      var data = ctx.getImageData(0,0,canvas.width,canvas.height);
+      for(var i = 0; i < data.data.length; i++) {
+        data.data[i] = result.data[i];
+      }
+      ctx.putImageData(data,0,0);
+    };
+
+
+    JOB.SwitchLocalizationFeedback(true);
+    JOB.SetLocalizationCallback(function(result) {
+      ctx.beginPath();
+      ctx.lineWIdth = "2";
+      ctx.strokeStyle="red";
+      for(var i = 0; i < result.length; i++) {
+        ctx.rect(result[i].x,result[i].y,result[i].width,result[i].height);
+      }
+      ctx.stroke();
+    });
+
+
+    if(takePicture && showPicture) {
+      takePicture.onchange = function (event) {
+        console.log("onchange");
+        var files = event.target.files;
+        if (files && files.length > 0) {
+          file = files[0];
+          try {
+            var URL = window.URL || window.webkitURL;
+            showPicture.onload = function(event) {
+              Result.innerHTML="";
+              JOB.DecodeImage(showPicture);
+              URL.revokeObjectURL(showPicture.src);
+            };
+            showPicture.src = URL.createObjectURL(file);
+          }
+          catch (e) {
+            try {
+              console.log("FileReader");
+              var fileReader = new FileReader();
+              fileReader.onload = function (event) {
+                showPicture.onload = function(event) {
+                  Result.innerHTML="";
+                  console.log("filereader");
+                  JOB.DecodeImage(showPicture);
+                };
+                showPicture.src = event.target.result;
+              };
+              fileReader.readAsDataURL(file);
+            }
+            catch (e) {
+              Result.innerHTML = "Neither createObjectURL or FileReader are supported";
+            }
+          }
+        }
+      };
+    }
+
+
+}
+
 
   $scope.exhibit;
   $scope.statusMessage;
   $scope.stores = [
    { id: 1, name: 'K-market' },
    { id: 2, name: 'S-market' },
-   { id: 3, name: 'Prisma' },
+   { id: 3, name: 'K-Citymarket' },
    { id: 4, name: 'Siwa' },
    { id: 5, name: 'Valintatalo' },
-   { id: 6, name: 'Alepa' }
+   { id: 6, name: 'Alepa' },
+   { id: 7, name: 'Prisma' }
  ];
 
   //making a new one or editing old?
@@ -313,7 +329,9 @@ console.log("HERE IT IS")
 
   $scope.addPiece = function(){
     $scope.exhibit.content.push({title: "", empty: "", Ahuzim: "", temp_id: Date.now()});
-  }
+    }
+
+
 
   $scope.deletePiece = function(id){
     var deleteIndex = _.findIndex($scope.exhibit.content, function(piece) { return piece.temp_id == id })
@@ -410,7 +428,7 @@ console.log("HERE IT IS")
 
     $timeout(function () {
       //defined in youtube.js
-      loadYoutubePlayers();
+    //  loadYoutubePlayers();
     }, 0, false);
 
   });

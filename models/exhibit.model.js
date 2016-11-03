@@ -10,7 +10,8 @@ var exhibitModel = new Schema({
     content:[{
       title: {type: String},
       empty: {type: String},
-      Ahuzim: {type: String},
+      Ahuzim: {type: Number},
+      imag: {type:String},
     }]
 });
 

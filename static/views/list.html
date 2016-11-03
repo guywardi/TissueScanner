@@ -1,26 +1,17 @@
 <div class="wrap boxed list-view">
 
-<h1>List of collections</h1>
+<h1>List of Stores</h1>
 
 <div ng-repeat="exhibit in exhibits" class="list-item">
-     {{exhibit.store}} {{exhibit.title}}
+      {{exhibit.title}} {{exhibit.store}}
     <span style="float:right">
-        <a ui-sref="view({id: exhibit._id})">View</a>
+        <a ui-sref="view({id: exhibit._id})">View</a> |
         <a ui-sref="edit({id: exhibit._id})">Edit</a> |
         <button ng-click="delete(exhibit._id)">Delete</button>
     </span>
 </div>
 
 <hr>
-<div ng-app ng-controller="ListCtrl">
-    <input id="shoot" type="file" accept="image/*;capture=camera" onchange="angular.element(this).scope().scanImage()" />
-</div>
-<input type="number" name="search-1" class="search-1" id="search-1" readonly="true" >
-<canvas id="barcode_image"></canvas>
-				<p id="error_scan"></p>
-                <!-- This input is alternative to search bar and calling the camera on mobile phone or file explorer on computer -->
-
-
 
 <a ui-sref="new">Add new store</a>
 

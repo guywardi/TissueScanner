@@ -1,10 +1,11 @@
 (function() {
-
+console.log("Calling old exif");
     var debug = false;
 
     var root = this;
 
     var EXIF = function(obj) {
+      console.log("exif");
         if (obj instanceof EXIF) return obj;
         if (!(this instanceof EXIF)) return new EXIF(obj);
         this.EXIFwrapped = obj;

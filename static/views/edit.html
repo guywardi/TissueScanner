@@ -5,12 +5,22 @@
     <hr>
 
     <div ng-repeat="piece in exhibit.content">
-        <label>Scan:</label><button><img src="static/assets/camera.png"/ alt="scanner" width="25px" height="20px"></button><br>
-        <label>Product name</label><input ng-model="piece.title" type="text"><br>
-        <label>Calculation input</label><input type="text" name="calculation" ng-model="piece.Ahuzim">
+
+      <!--<input type="number" name="search-1" class="search-1" id="search-1" readonly="true" >-->
+      <canvas id="barcode_image" style="display:none;"></canvas>
+      				<p id="error_scan"></p>
+              <div ng-app ng-controller="ListCtrl">
+        <label for="shoot">Scan:</label>
+        <input class="shoot" type="file" accept="image/*;capture=camera" onclick="angular.element(this).scope().scanImage()" /><br>
+        </div>
+        <img ng-src="assets\img\lambi_kitchen.jpg" alt="Lambi_k" id="lambik" style="display:none; width:100px;"/>
+        <img ng-src="assets\img\lambi_WC.jpg" alt="Lambi_wc" id="lambiwc" style="display:none; width:100px;"/>
+        <img ng-src="assets\img\{{piece.empty}}.jpg" alt="Lambi_wc"  style="width:100px;" id="imggg"/>
+        <label>Product name:</label><input ng-model="piece.title" type="text" readonly="true" id="Pname" name="Pname"><br>
+        <label>Ammount of products:</label><input type="number" name="calculation" ng-model="piece.Ahuzim">
         <br>
-        <form><label>Shelf empty</label><input type="radio" ng-model="piece.empty" name="empty" value="Yes" > Yes<input type="radio" ng-model="piece.empty" name="empty" value="No" checked > No</form>
-        <button ng-click="deletePiece(piece.temp_id)">Delete this part</button>
+        <!--<form><label>Shelf empty</label><input type="radio" ng-model="piece.empty" name="empty" value="Yes" > Yes<input type="radio" ng-model="piece.empty" name="empty" value="No" checked > No</form>-->
+        <button ng-click="deletePiece(piece.temp_id)">Delete this product</button>
 
         <hr>
 
@@ -18,7 +28,7 @@
 
     <div class="manage">
 
-        <button ng-click="addPiece()">Add another piece of content</button>
+        <button ng-click="addPiece()">Add another product</button>
 
         <br>
 
@@ -38,7 +48,7 @@
 
         <hr>
 
-         <p ng-if="exhibit._id"><a ui-sref="view({id: exhibit._id})">Preview public view</a> | <a ui-sref="print({id: exhibit._id})">Preview QR & print</a> | <a ui-sref="list">Back to listing</a></p>
+         <p ng-if="exhibit._id"><a ui-sref="view({id: exhibit._id})">Preview public view</a> |  <a ui-sref="list">Back to store listing</a></p>
         <button ng-if="!new" ng-click="saveExhibit()">Save</button>
         <button ng-if="new" ng-click="newExhibit()">Save</button>
         <p>{{statusMessage}}</p>

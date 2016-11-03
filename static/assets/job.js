@@ -13,6 +13,7 @@
  *
  */
 JOB = {
+
 	Config : {
 		// Set to false if the decoder should look for one barcode and then stop. Increases performance.
 		Multiple : true,
@@ -46,6 +47,7 @@ JOB = {
 	OrientationCallback : null,
 	// Always call the Init().
 	Init : function() {
+		console.log("Now the call....");
 		JOB.ScanCanvas = JOB.FixCanvas(document.createElement("canvas"));
 		JOB.ScanCanvas.width = 640;
 		JOB.ScanCanvas.height = 480;
