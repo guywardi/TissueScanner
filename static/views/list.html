@@ -1,18 +1,41 @@
-<div class="wrap boxed list-view">
+<div class="top-bar">
+               <div class="top-bar-left">
+                <ul class="menu">
+                    <li class="menu-text"><img class="menu-logo" src="assets/img/micon.png" /></li>
 
-<h1>List of Stores</h1>
 
-<div ng-repeat="exhibit in exhibits" class="list-item">
-    {{exhibit.myDate}} {{exhibit.title}} {{exhibit.store}}
+                </ul>
+               </div>
+                <div class="top-bar-right">
+
+               </div>
+
+           </div>
+
+<div class="row">
+
+  <div class="small-9 columns" style="margin-left:60px;">
+  <div class="callout success">
+  <h2 class="text-center">List of Stores</h2>
+  <div ng-repeat="exhibit in exhibits" class="list-item">
+    {{exhibit.myDate}}  {{exhibit.title}} {{exhibit.store}}
     <span style="float:right">
-        <a ui-sref="view({id: exhibit._id})">View</a> |
-        <a ui-sref="edit({id: exhibit._id})">Edit</a> |
-        <button ng-click="delete(exhibit._id)">Delete</button>
+        <a class="button small" ui-sref="view({id: exhibit._id})">View</a>
+        <a class="button warning small" ui-sref="edit({id: exhibit._id})">Edit</a>
+        <a class="button alert small" ng-click="delete(exhibit._id)">Delete</a>
     </span>
-</div>
-
-<hr>
-
-<a ui-sref="new">Add new store</a>
 
 </div>
+
+
+
+  </div>
+  <div style="padding-right:30px; float:right;">
+<a class="button" ui-sref="new">Add new store</a>
+</div>
+  </div>
+
+</div>
+
+
+  <div class="footer"><br><b>&copy; Copyright MetsaTissue 2016</b></div>

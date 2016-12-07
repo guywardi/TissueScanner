@@ -1,7 +1,7 @@
 
 //var config = require('../.../config');
 //init frontpage
-var pms = angular.module('qrms', ['ui.router', 'ngMaterial'])
+var pms = angular.module('qrms', ['ui.router'])
 
 
 
@@ -127,24 +127,41 @@ var pms = angular.module('qrms', ['ui.router', 'ngMaterial'])
 //EDIT AND CREATE NEW
 .controller('EditCtrl', ['$scope', '$rootScope', '$state', 'restcli', function($scope, $rootScope, $state, restcli) {
 
+$scope.scanTime = 1;
 
 //CALANDER
-  $scope.myDate = new Date();
+//  $scope.myDate = new Date();
 
-  $scope.minDate = new Date(
-      $scope.myDate.getFullYear(),
-      $scope.myDate.getMonth() - 2,
-      $scope.myDate.getDate());
+  //$scope.minDate = new Date(
+    //  $scope.myDate.getFullYear(),
+      //$scope.myDate.getMonth() - 2,
+      //$scope.myDate.getDate());
 
 //END CALANDER
-
+//$scope.image;
   $rootScope.auth();
   var takePicture;
   var item_id;
   var nana;
 
+/*  $scope.$watch("image", function(newValue, oldValue) {
+   // Do anything you want here
+   console.log("CHANGEE");
+   console.log(newValue);
+   //$scope.scanImage(newValue);
+  })
+*/
     $scope.scanImage = function () {
+  //    _.findIndex($scope.exhibit.content, function(piece) {
+    //    var fornow = "te" + piece.temp_id;
+      //  console.log(fornow);
+        //console.log(piece.temp_id);
+    //takePicture = document.querySelector(fornow);
     takePicture = document.querySelector(".shoot");
+    console.log(takePicture);
+//  })
+
+
     //Hide because of new image coming from scan
 document.getElementById("imggg").style.display = "none";
 var showPicture = document.createElement("img");
@@ -165,6 +182,7 @@ var showPicture = document.createElement("img");
                   // Scanned ID
         var id = tempArray.join();
         console.log(id);
+        _.findIndex($scope.exhibit.content, function(piece) {
         if (id == 7316970152117)
         {
           document.getElementById("lambiwc").style.display = "block";
@@ -175,6 +193,7 @@ var showPicture = document.createElement("img");
           document.getElementById("Lotus-Emilia").style.display = "none";
           nana = "Lambi-wc-paperi-6rl";
           $("#Pname").val(nana);
+          //document.getElementById(piece.temp_id).value = nana
         }
         else if(id == 6414301011049)
         {
@@ -196,7 +215,8 @@ var showPicture = document.createElement("img");
           document.getElementById("pirkkawc").style.display = "none";
           document.getElementById("lotuswc").style.display = "none";
           document.getElementById("Lotus-Emilia").style.display = "none";
-          $("#Pname").val(nana);
+
+            document.getElementById(piece.temp_id).value = nana
         }
         else if(id == 6410405174925)
         {
@@ -218,7 +238,7 @@ var showPicture = document.createElement("img");
           document.getElementById("pirkkawc").style.display = "none";
           document.getElementById("lotuswc").style.display = "block";
           document.getElementById("Lotus-Emilia").style.display = "none";
-          $("#Pname").val(nana);
+          $("#Pname+$scope.scanTime").val(nana);
         }
         else if(id == 6413200340205)
         {
@@ -231,7 +251,7 @@ var showPicture = document.createElement("img");
           document.getElementById("Lotus-Emilia").style.display = "block";
           $("#Pname").val(nana);
         }
-        _.findIndex($scope.exhibit.content, function(piece) {
+
           piece.title = nana;
         })
 
@@ -324,6 +344,8 @@ console.log("HERE IT IS")
 }
 
 
+
+
   $scope.exhibit;
   $scope.statusMessage;
   $scope.stores = [
@@ -346,11 +368,9 @@ $scope.changedValue = function(item) {
 
  }
  $scope.changedDate = function(item) {
-   console.log(item);
-    console.log("Changed!!");
-  var a  = element(by.binding('example.value | date: "yyyy-MM-dd"'));
-  console.log(a);
-  $scope.exhibit.myDate = document.getElementById("date").value;
+    var  mydate = new Date(date.value);
+    var dass = (mydate.getMonth() + 1) + '/' + mydate.getDate() + '/' +  mydate.getFullYear();
+  $scope.exhibit.myDate =  dass;
 //$scope.exhibit.myDate = item;
   }
 
@@ -375,17 +395,14 @@ $scope.changedValue = function(item) {
 $scope.saveCal = function(){
        _.findIndex($scope.exhibit.content, function(piece) {
       console.log("AHUZIM");
-      var L;
-      var H;
-      var D;
-      if ($scope.exhibit.store == "K-market") {
-        console.log("ITS ALL BEUNO!");
-        L = 7;
-        H = 1.5;
-        D = 0.60;
-      }
-          console.log(piece.Ahuzim);
-         piece.cal  = (piece.Ahuzim * 0.33 * 0.11 * 0.202) / (L*H*D);
+      var L = 150;
+      var H = 60;
+      var D = 70;
+
+    var ammount = Math.floor(D / 11);
+    var products = piece.Ahuzim * ammount;
+         piece.cal  = ((products * 33 * 11 * 20) / (L*H*D)) * 100;
+         piece.cal = Math.round(piece.cal * 100) / 100;
          console.log( piece.cal);
     })
 }
@@ -395,7 +412,7 @@ $scope.saveCal = function(){
     console.log("Yes Start1");
     $scope.statusMessage = "Saving...";
     console.log("Yes mid2");
-             $scope.saveCal();
+    $scope.saveCal();
     restcli.setExhibit($scope.exhibit).success(function(data, status){
       console.log("Yes end3");
       $scope.statusMessage = "Save successful";
@@ -440,6 +457,7 @@ $scope.saveCal = function(){
   }
 
   $scope.addPiece = function(){
+    $scope.scanTime++;
     $scope.exhibit.content.push({title: "", shelf: "", empty: "", Ahuzim: "",cal: "", temp_id: Date.now()});
 
     }

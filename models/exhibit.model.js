@@ -7,7 +7,7 @@ var collectionName = 'exhibits';
 var exhibitModel = new Schema({
     title: {type: String},
     store: {type: String},
-    myDate: {type:Date},
+    myDate: {type:String},
     content:[{
       title: {type: String},
       empty: {type: String},

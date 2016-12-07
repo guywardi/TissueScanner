@@ -1,8 +1,26 @@
 <div class="wrap boxed login-view">
+<div class="callout secondary">
+<div class="row">
 
-<label>User: </label><input ng-model="username" type="text"><br>
+  <div class="column small-centered medium-6 large-4">
+
+					<img class="thumbnail" src="../assets/img/Metsa.png"/>
+
+  </div>
+
+</div>
+<div class="row" >
+
+                    <div class="column small-centered medium-6 large-4">
+                    <label>User: </label><input ng-model="username" type="text"><br>
 <label>Password: </label><input ng-model="password" type="password"><br>
-<button ng-click="authenticate()">Log in</button>
-<p>{{authMessage}}</p>
+<a class="small expanded button" ng-click="authenticate()">Log in</a>
+<p style="text-align:center;">{{authMessage}}</p>
+
+                    </div>
+
+                </div>
+				</div>
+
 
 </div>

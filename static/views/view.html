@@ -1,6 +1,21 @@
-<div class="wrap boxed view-view">
+<div class="top-bar">
+               <div class="top-bar-left">
+                <ul class="menu">
+                    <li class="menu-text"><img  class="menu-logo" src="assets/img/micon.png" /></li>
 
-    <h1>{{exhibit.myDate}} {{exhibit.title}} {{exhibit.store}} </h1>
+
+                </ul>
+               </div>
+                <div class="top-bar-right">
+
+               </div>
+
+           </div>
+    <div class="row">
+
+  <div class="small-9 columns" style="margin-left:60px;">
+  <div class="callout success">
+    <h2 class="text-center">{{exhibit.title}} {{exhibit.store}} </h2>
 
     <div ng-repeat="piece in exhibit.content">
       <table>
@@ -21,9 +36,12 @@
         <hr>
 
 
-
-    </div>
-
 </div>
+    </div>
+	<div style="padding-right:30px; float:right;">
+<a class="button expanded" ui-sref="list">Back to store listing</a>
+</div>
+	</div>
+	</div>
 
-<footer class="wrap"> <a ui-sref="list">Back to store listing</a></footer>
+<div class="footer"><br><b>&copy; Copyright MetsaTissue 2016</b></div>
