@@ -1,7 +1,8 @@
 <div class="wrap boxed edit-view">
 
+    <label for="date">Date</label><input ng-model="example.value" ng-change="changedDate(example.value)" value="05-05-2000" type="date" id="date" md-placeholder="Enter date"></input><br>
     <label>Store id</label><input ng-model="exhibit.title" type="text">
-    <select data-ng-model="exhibit.store" ng-options="item as item.name for item in stores"></select>
+    <select ng-model="exhibit.store" ng-options="item as item.name for item in stores track by item.name" ng-change="changedValue(exhibit.store)" ><option value="item.id"></option></select>
     <hr>
 
     <div ng-repeat="piece in exhibit.content">
@@ -13,13 +14,22 @@
         <label for="shoot">Scan:</label>
         <input class="shoot" type="file" accept="image/*;capture=camera" onclick="angular.element(this).scope().scanImage()" /><br>
         </div>
-        <img ng-src="assets\img\lambi_kitchen.jpg" alt="Lambi_k" id="lambik" style="display:none; width:100px;"/>
-        <img ng-src="assets\img\lambi_WC.jpg" alt="Lambi_wc" id="lambiwc" style="display:none; width:100px;"/>
-        <img ng-src="assets\img\{{piece.empty}}.jpg" alt="Lambi_wc"  style="width:100px;" id="imggg"/>
-        <label>Product name:</label><input ng-model="piece.title" type="text" readonly="true" id="Pname" name="Pname"><br>
+        <!-- HIDDEN IMG.. change when scan-->
+        <img ng-src="assets\img\Lambi-talouspaperi-3rl.jpg" alt="Lambi_k" id="lambik" style="display:none; width:100px;"/>
+        <img ng-src="assets\img\Lambi-wc-paperi-6rl.jpg" alt="Lambi_wc" id="lambiwc" style="display:none; width:100px;"/>
+        <img ng-src="assets\img\Serla-wc-paperi-12rl.jpg" alt="serla_WC" id="serlawc" style="display:none; width:100px;"/>
+        <img ng-src="assets\img\Pirkka-NIKSI-wc-paperi-6rl.jpg" alt="pirkka_WC" id="pirkkawc" style="display:none; width:100px;"/>
+        <img ng-src="assets\img\lotus-Luonnonystävän-wc-paperi-8rl.jpg" alt="serla_WC" id="lotuswc" style="display:none; width:100px;"/>
+        <img ng-src="assets\img\Lotus-Emilia-4rl.jpg" alt="Lambi_wc" id="Lotus-Emilia" style="display:none; width:100px;"/>
+
+
+        <img ng-src="assets\img\{{piece.title}}.jpg" alt="Scanned image"  style="width:100px;" id="imggg"/><br>
+
+        <input type="number" name="cal" ng-model="piece.cal" style="display:none;">
+        <label>Product name:</label><input ng-model="piece.title" type="text"  id="Pname" name="Pname"><br>
         <label>Ammount of products:</label><input type="number" name="calculation" ng-model="piece.Ahuzim">
         <br>
-        <!--<form><label>Shelf empty</label><input type="radio" ng-model="piece.empty" name="empty" value="Yes" > Yes<input type="radio" ng-model="piece.empty" name="empty" value="No" checked > No</form>-->
+        <label>Shelf ID:</label><input type="number" name="shelfId" ng-model="piece.shelf">      <br>
         <button ng-click="deletePiece(piece.temp_id)">Delete this product</button>
 
         <hr>

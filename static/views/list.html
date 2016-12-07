@@ -3,7 +3,7 @@
 <h1>List of Stores</h1>
 
 <div ng-repeat="exhibit in exhibits" class="list-item">
-      {{exhibit.title}} {{exhibit.store}}
+    {{exhibit.myDate}} {{exhibit.title}} {{exhibit.store}}
     <span style="float:right">
         <a ui-sref="view({id: exhibit._id})">View</a> |
         <a ui-sref="edit({id: exhibit._id})">Edit</a> |

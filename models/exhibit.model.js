@@ -7,11 +7,13 @@ var collectionName = 'exhibits';
 var exhibitModel = new Schema({
     title: {type: String},
     store: {type: String},
+    myDate: {type:Date},
     content:[{
       title: {type: String},
       empty: {type: String},
       Ahuzim: {type: Number},
-      imag: {type:String},
+       cal: {type: Number},
+      shelf: {type:Number},
     }]
 });
 

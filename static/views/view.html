@@ -1,6 +1,6 @@
 <div class="wrap boxed view-view">
 
-    <h1>{{exhibit.title}} {{exhibit.store}} </h1>
+    <h1>{{exhibit.myDate}} {{exhibit.title}} {{exhibit.store}} </h1>
 
     <div ng-repeat="piece in exhibit.content">
       <table>
@@ -10,10 +10,14 @@
         </tr><tr>
           <th>Shelf percentage:</th>
           <td>
-            {{piece.Ahuzim}}%</td>
+            {{piece.cal}}%</td>
         </tr>
+        <tr>
+          <th>Shelf ID:</th>
+          <td>
+            {{piece.shelf}}</td>
       </table>
-      <br> <img ng-src="assets/img/{{piece.empty}}.jpg" alt="img" style="width:100px;"/>
+      <br> <img ng-src="assets/img/{{piece.title}}.jpg" alt="img" style="width:100px;"/>
         <hr>
 
 

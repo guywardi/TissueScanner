@@ -1,7 +1,7 @@
 
 //var config = require('../.../config');
 //init frontpage
-var pms = angular.module('qrms', ['ui.router'])
+var pms = angular.module('qrms', ['ui.router', 'ngMaterial'])
 
 
 
@@ -77,7 +77,7 @@ var pms = angular.module('qrms', ['ui.router'])
 }])
 
 //LOGIN
-/*.controller('LoginCtrl', ['$scope', '$rootScope', '$state', '$http', 'restcli', function($scope, $rootScope, $state, $http, restcli) {
+.controller('LoginCtrl', ['$scope', '$rootScope', '$state', '$http', 'restcli', function($scope, $rootScope, $state, $http, restcli) {
 
   $scope.username = "";
   $scope.password = "";
@@ -95,12 +95,12 @@ var pms = angular.module('qrms', ['ui.router'])
   }
 
 
-}])*/
+}])
 
 //LIST ALL STUFFS
 .controller('ListCtrl', ['$scope', '$rootScope', '$state', 'restcli', function($scope, $rootScope, $state, restcli) {
 
-  //$rootScope.auth();
+  $rootScope.auth();
 
 
 
@@ -114,9 +114,11 @@ var pms = angular.module('qrms', ['ui.router'])
   $scope.getExhibits();
 
   $scope.delete = function(id){
+    if (confirm('Are you sure you want to delete this Store?')) {
     restcli.deleteExhibit(id).success(function(data, status){
       $scope.getExhibits();
     });
+  }
   }
 
 }])
@@ -125,19 +127,32 @@ var pms = angular.module('qrms', ['ui.router'])
 //EDIT AND CREATE NEW
 .controller('EditCtrl', ['$scope', '$rootScope', '$state', 'restcli', function($scope, $rootScope, $state, restcli) {
 
-  //$rootScope.auth();
+
+//CALANDER
+  $scope.myDate = new Date();
+
+  $scope.minDate = new Date(
+      $scope.myDate.getFullYear(),
+      $scope.myDate.getMonth() - 2,
+      $scope.myDate.getDate());
+
+//END CALANDER
+
+  $rootScope.auth();
   var takePicture;
   var item_id;
-  var x = 0;
   var nana;
+
     $scope.scanImage = function () {
-takePicture = document.querySelector(".shoot");
+    takePicture = document.querySelector(".shoot");
+    //Hide because of new image coming from scan
 document.getElementById("imggg").style.display = "none";
 var showPicture = document.createElement("img");
     Result = document.querySelector("#error_scan");
     var canvas = document.getElementById("barcode_image");
     var ctx = canvas.getContext("2d");
     JOB.Init();
+
     JOB.SetImageCallback(function(result) {
       console.log("Starting image callback");
       if(result.length > 0){
@@ -154,16 +169,72 @@ var showPicture = document.createElement("img");
         {
           document.getElementById("lambiwc").style.display = "block";
           document.getElementById("lambik").style.display = "none";
-          nana = "Lambi wc-paperi 6 rl";
+          document.getElementById("serlawc").style.display = "none";
+          document.getElementById("pirkkawc").style.display = "none";
+          document.getElementById("lotuswc").style.display = "none";
+          document.getElementById("Lotus-Emilia").style.display = "none";
+          nana = "Lambi-wc-paperi-6rl";
           $("#Pname").val(nana);
         }
         else if(id == 6414301011049)
         {
-          nana= "Lambi talouspaperi 3 rl ";
+          nana= "Lambi-talouspaperi-3rl";
           document.getElementById("lambik").style.display = "block";
           document.getElementById("lambiwc").style.display = "none";
+          document.getElementById("serlawc").style.display = "none";
+          document.getElementById("pirkkawc").style.display = "none";
+          document.getElementById("lotuswc").style.display = "none";
+          document.getElementById("Lotus-Emilia").style.display = "none";
           $("#Pname").val(nana);
         }
+        else if(id == 6414301003075)
+        {
+          nana= "Serla-wc-paperi-12rl";
+          document.getElementById("lambik").style.display = "none";
+          document.getElementById("lambiwc").style.display = "none";
+          document.getElementById("serlawc").style.display = "block";
+          document.getElementById("pirkkawc").style.display = "none";
+          document.getElementById("lotuswc").style.display = "none";
+          document.getElementById("Lotus-Emilia").style.display = "none";
+          $("#Pname").val(nana);
+        }
+        else if(id == 6410405174925)
+        {
+          nana= "Pirkka-NIKSI-wc-paperi-6rl";
+          document.getElementById("lambik").style.display = "none";
+          document.getElementById("lambiwc").style.display = "none";
+          document.getElementById("serlawc").style.display = "none";
+          document.getElementById("pirkkawc").style.display = "block";
+          document.getElementById("lotuswc").style.display = "none";
+          document.getElementById("Lotus-Emilia").style.display = "none";
+          $("#Pname").val(nana);
+        }
+        else if(id == 6413200020886)
+        {
+          nana= "lotus-Luonnonystävän-wc-paperi-8rl";
+          document.getElementById("lambik").style.display = "none";
+          document.getElementById("lambiwc").style.display = "none";
+          document.getElementById("serlawc").style.display = "none";
+          document.getElementById("pirkkawc").style.display = "none";
+          document.getElementById("lotuswc").style.display = "block";
+          document.getElementById("Lotus-Emilia").style.display = "none";
+          $("#Pname").val(nana);
+        }
+        else if(id == 6413200340205)
+        {
+          nana= "Lotus-Emilia-4rl";
+          document.getElementById("lambik").style.display = "none";
+          document.getElementById("lambiwc").style.display = "none";
+          document.getElementById("serlawc").style.display = "none";
+          document.getElementById("pirkkawc").style.display = "none";
+          document.getElementById("lotuswc").style.display = "none";
+          document.getElementById("Lotus-Emilia").style.display = "block";
+          $("#Pname").val(nana);
+        }
+        _.findIndex($scope.exhibit.content, function(piece) {
+          piece.title = nana;
+        })
+
                   // If the page is main
         /*if($.mobile.path.get() == "" || $.mobile.path.get() == "to_choose") {
           console.log("JUPPOOO!!");
@@ -212,6 +283,7 @@ console.log("HERE IT IS")
 
 
     if(takePicture && showPicture) {
+      console.log("TAKEPICTURE");
       takePicture.onchange = function (event) {
         console.log("onchange");
         var files = event.target.files;
@@ -264,6 +336,24 @@ console.log("HERE IT IS")
    { id: 7, name: 'Prisma' }
  ];
 
+ $scope.itemList = [];
+
+$scope.changedValue = function(item) {
+  console.log(item);
+  console.log(name);
+   $scope.exhibit.store = item.name;
+   console.log("Changed!!");
+
+ }
+ $scope.changedDate = function(item) {
+   console.log(item);
+    console.log("Changed!!");
+  var a  = element(by.binding('example.value | date: "yyyy-MM-dd"'));
+  console.log(a);
+  $scope.exhibit.myDate = document.getElementById("date").value;
+//$scope.exhibit.myDate = item;
+  }
+
   //making a new one or editing old?
   $scope.new = $state.params.id ? false : true;
 
@@ -274,18 +364,38 @@ console.log("HERE IT IS")
       console.log(data);
       $scope.exhibit = data;
       for(var piece in $scope.exhibit.content){
-        $scope.exhibit.content[piece].temp_id = $scope.exhibit.content[piece]._id; //give everyone temp ids because unsaved pieces of the content array dont have real ones
+        $scope.exhibit.content[piece].temp_id = $scope.exhibit.content[piece]._id; //give everyone temp ids because unsaved pieces of the content array dont have real onesadd
       }
     });
   }else{
-    $scope.exhibit = {title: "", content: []}; //create fresh main object
+    $scope.exhibit = {title: "",store: "",myDate: "" , content: []}; //create fresh main object
   }
+
+
+$scope.saveCal = function(){
+       _.findIndex($scope.exhibit.content, function(piece) {
+      console.log("AHUZIM");
+      var L;
+      var H;
+      var D;
+      if ($scope.exhibit.store == "K-market") {
+        console.log("ITS ALL BEUNO!");
+        L = 7;
+        H = 1.5;
+        D = 0.60;
+      }
+          console.log(piece.Ahuzim);
+         piece.cal  = (piece.Ahuzim * 0.33 * 0.11 * 0.202) / (L*H*D);
+         console.log( piece.cal);
+    })
+}
 
   //save and re-init
   $scope.saveExhibit = function(){
     console.log("Yes Start1");
     $scope.statusMessage = "Saving...";
     console.log("Yes mid2");
+             $scope.saveCal();
     restcli.setExhibit($scope.exhibit).success(function(data, status){
       console.log("Yes end3");
       $scope.statusMessage = "Save successful";
@@ -299,8 +409,10 @@ console.log("HERE IT IS")
     $scope.statusMessage = "Saving...";
     console.log("Yes mid");
     console.log($scope.exhibit);
+          $scope.saveCal();
     restcli.addExhibit($scope.exhibit).success(function(data, status){
       console.log("Yes end");
+
       $state.go("edit", {id:data._id});
     });
   }
@@ -328,14 +440,17 @@ console.log("HERE IT IS")
   }
 
   $scope.addPiece = function(){
-    $scope.exhibit.content.push({title: "", empty: "", Ahuzim: "", temp_id: Date.now()});
+    $scope.exhibit.content.push({title: "", shelf: "", empty: "", Ahuzim: "",cal: "", temp_id: Date.now()});
+
     }
 
 
 
   $scope.deletePiece = function(id){
+  if (confirm('Are you sure you want to delete this product?')) {
     var deleteIndex = _.findIndex($scope.exhibit.content, function(piece) { return piece.temp_id == id })
     $scope.exhibit.content.splice(deleteIndex, 1);
+  }
   }
 
 /*  $scope.audioResources;

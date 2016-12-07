@@ -37,10 +37,15 @@ var routes = function(Exhibit) {
     //put changes qrUrl and Content
     .put(passport.authenticate('jwt', {
       session: false
+
     }), function(req, res) {
       //req.exhibit= req.body;
+      console.log("HERE??");
       req.exhibit.title = req.body.title;
+      req.exhibit.store = req.body.store;
       req.exhibit.content = req.body.content;
+      console.log("SAVING TEST!!");
+      console.log(exhibit.content);
       req.exhibit.save(function(err) {
         if (err)
           res.status(500).send(err);
