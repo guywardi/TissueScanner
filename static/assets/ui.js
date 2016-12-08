@@ -152,18 +152,19 @@ $scope.scanTime = 1;
   })
 */
     $scope.scanImage = function () {
-  //    _.findIndex($scope.exhibit.content, function(piece) {
-    //    var fornow = "te" + piece.temp_id;
-      //  console.log(fornow);
-        //console.log(piece.temp_id);
-    //takePicture = document.querySelector(fornow);
-    takePicture = document.querySelector(".shoot");
+      _.findIndex($scope.exhibit.content, function(piece) {
+        var fornow = "te" + piece.temp_id;
+        fornow.toString();
+        console.log(fornow);
+        console.log(piece.temp_id);
+    takePicture = document.querySelector("."+fornow);
+    //takePicture = document.querySelector(".shoot");
     console.log(takePicture);
-//  })
+  })
 
 
     //Hide because of new image coming from scan
-document.getElementById("imggg").style.display = "none";
+document.getElementById("imggg")
 var showPicture = document.createElement("img");
     Result = document.querySelector("#error_scan");
     var canvas = document.getElementById("barcode_image");
@@ -192,8 +193,8 @@ var showPicture = document.createElement("img");
           document.getElementById("lotuswc").style.display = "none";
           document.getElementById("Lotus-Emilia").style.display = "none";
           nana = "Lambi-wc-paperi-6rl";
-          $("#Pname").val(nana);
-          //document.getElementById(piece.temp_id).value = nana
+          //$("#Pname").val(nana);
+          document.getElementById("Pname").value = nana
         }
         else if(id == 6414301011049)
         {
@@ -301,10 +302,11 @@ console.log("HERE IT IS")
       ctx.stroke();
     });
 
-
+//document.getElementById("IDTeam").addEventListener("change", function() {//call function here});
     if(takePicture && showPicture) {
       console.log("TAKEPICTURE");
       takePicture.onchange = function (event) {
+    //  takePicture.addEventListener("change", function(event) {
         console.log("onchange");
         var files = event.target.files;
         if (files && files.length > 0) {
@@ -395,13 +397,41 @@ $scope.changedValue = function(item) {
 $scope.saveCal = function(){
        _.findIndex($scope.exhibit.content, function(piece) {
       console.log("AHUZIM");
-      var L = 150;
-      var H = 60;
-      var D = 70;
+      var Ls = 150;
+      var Hs = 60;
+      var Ds = 70;
+      var Lp;
+      var Hp;
+      var Dp;
+      if (piece.title == "Serla-wc-paperi-12rl") {
+        Lp = 42.5;
+        Hp = 21.5;
+        Dp = 20.2;
+      }else if (piece.title == "lotus-Luonnonystävän-wc-paperi-8rl") {
+        Lp = 42.0;
+        Hp = 11.0;
+        Dp = 20.5;
+      }else if (piece.title == "Pirkka-NIKSI-wc-paperi-6rl") {
+        Lp = 30.0;
+        Hp = 20.0;
+        Dp = 9.5;
+      }else if (piece.title == "Lambi-talouspaperi-3rl") {
+        Lp = 34.0;
+        Hp = 11.5;
+        Dp = 22.0;
+      }else if (piece.title == "Lotus-Emilia-4rl") {
+        Lp = 41.0;
+        Hp = 21.5;
+        Dp = 11.2;
+      }else if (piece.title == "Lambi-wc-paperi-6rl") {
+        Lp = 33.0;
+        Hp = 20.2;
+        Dp = 11.0;
+      }
 
-    var ammount = Math.floor(D / 11);
+    var ammount = Math.floor(Ds / Dp);
     var products = piece.Ahuzim * ammount;
-         piece.cal  = ((products * 33 * 11 * 20) / (L*H*D)) * 100;
+         piece.cal  = ((products * Lp * Dp * Hp) / (Ls*Hs*Ds)) * 100;
          piece.cal = Math.round(piece.cal * 100) / 100;
          console.log( piece.cal);
     })
@@ -409,14 +439,14 @@ $scope.saveCal = function(){
 
   //save and re-init
   $scope.saveExhibit = function(){
-    console.log("Yes Start1");
-    $scope.statusMessage = "Saving...";
-    console.log("Yes mid2");
-    $scope.saveCal();
-    restcli.setExhibit($scope.exhibit).success(function(data, status){
-      console.log("Yes end3");
-      $scope.statusMessage = "Save successful";
-      $scope.exhibit = data;
+  console.log("Yes Start1");
+  $scope.statusMessage = "Saving...";
+  console.log("Yes mid2");
+  $scope.saveCal();
+  restcli.setExhibit($scope.exhibit).success(function(data, status){
+  console.log("Yes end3");
+  $scope.statusMessage = "Save successful";
+  $scope.exhibit = data;
     });
   }
 
@@ -429,7 +459,6 @@ $scope.saveCal = function(){
           $scope.saveCal();
     restcli.addExhibit($scope.exhibit).success(function(data, status){
       console.log("Yes end");
-
       $state.go("edit", {id:data._id});
     });
   }
@@ -453,7 +482,6 @@ $scope.saveCal = function(){
         var targetIdx = _.findLastIndex($scope.exhibit.content, {temp_id: $scope.uploadTarget});
         $scope.exhibit.content[targetIdx].url = "uploads/"+data[0].filename;
       }
-
   }
 
   $scope.addPiece = function(){
@@ -470,46 +498,6 @@ $scope.saveCal = function(){
     $scope.exhibit.content.splice(deleteIndex, 1);
   }
   }
-
-/*  $scope.audioResources;
-  restcli.getAudioResources().success(function(data, status){
-    console.log(data);
-    $scope.audioResources = data;
-  });
-
-
-
-  $scope.newAudioPiece = function(fileIdx){
-    $scope.exhibit.content.push({
-      language: "",
-      title: $scope.audioResources[fileIdx][0]['Title'],
-      description: $scope.parseDescription($scope.audioResources[fileIdx][0]),
-      type: 3,
-      createdFromDropDown: 1,
-      url: $scope.audioResources[fileIdx][0]['Download link'],
-      temp_id: Date.now()
-    });
-  }
-
-  $scope.youtubeVideos = [];
-
-  restcli.getYoutubeVideos().success(function(data, status){
-    console.log(data);
-    $scope.youtubeVideos = data.items;
-
-  });
-
-  $scope.newYoutubePiece = function(videoIdx){
-    $scope.exhibit.content.push({
-      language: "",
-      title: $scope.youtubeVideos[videoIdx]["snippet"]["title"],
-      description: $scope.youtubeVideos[videoIdx]["snippet"]["description"],
-      createdFromDropDown: 1,
-      type: 4,
-      url: $scope.youtubeVideos[videoIdx]["id"]["videoId"],
-      temp_id: Date.now()
-    });
-  }*/
 
   $scope.parseDescription = function(o){
     return o["Category"]+"/"+o["Original filename"];

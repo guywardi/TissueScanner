@@ -16,9 +16,9 @@
   <div class="small-9 columns" style="margin-left:60px;">
   <div class="callout success">
   <h2 class="text-center">Edit Store</h2>
-  <label for="date">Date</label><input ng-model="example.value" ng-change="changedDate(example.value)" value="05-05-2000" type="date" id="date" md-placeholder="Enter date"></input><br>
-  <label for="storeID">Store id:</label><input ng-model="exhibit.title" type="text" id="storeID">
-  <label for="storeType">Store type:</label><select ng-model="exhibit.store" ng-options="item as item.name for item in stores track by item.name" id="storeType" ng-change="changedValue(exhibit.store)" ><option value="item.name"></option></select>
+  <label for="date">Date</label><input ng-model="example.value" ng-change="changedDate(example.value)" value="05-05-2000" type="date" id="date" required</input><br>
+  <label for="storeID">Store id:</label><input ng-model="exhibit.title" type="text" id="storeID" required></input>
+  <label for="storeType">Store type:</label><select ng-model="exhibit.store" ng-options="item as item.name for item in stores track by item.name" id="storeType"  ng-change="changedValue(exhibit.store)" ><option value=''>{{exhibit.store}}</option></select>
     <hr>
 
     <div ng-repeat="piece in exhibit.content">
@@ -27,7 +27,7 @@
       				<p id="error_scan"></p>
               <div ng-app ng-controller="ListCtrl">
         <label for="shoot">Scan:</label>
-        <input class="shoot" type="file" accept="image/*;capture=camera" onclick="angular.element(this).scope().scanImage()" /><br>
+        <input class="te{{piece.temp_id}} shoot" name="piece.temp_id" type="file" accept="image/*;capture=camera" onclick="angular.element(this).scope().scanImage()" /><br>
         </div>
         <img ng-src="assets\img\Lambi-talouspaperi-3rl.jpg" alt="Lambi_k" id="lambik" style="display:none; width:100px;"/>
         <img ng-src="assets\img\Lambi-wc-paperi-6rl.jpg" alt="Lambi_wc" id="lambiwc" style="display:none; width:100px;"/>
@@ -35,12 +35,12 @@
         <img ng-src="assets\img\Pirkka-NIKSI-wc-paperi-6rl.jpg" alt="pirkka_WC" id="pirkkawc" style="display:none; width:100px;"/>
         <img ng-src="assets\img\lotus-Luonnonystävän-wc-paperi-8rl.jpg" alt="serla_WC" id="lotuswc" style="display:none; width:100px;"/>
         <img ng-src="assets\img\Lotus-Emilia-4rl.jpg" alt="Lambi_wc" id="Lotus-Emilia" style="display:none; width:100px;"/>
-        <img ng-src="assets\img\{{piece.title}}.jpg" alt="Scanned image"  style="width:100px;" id="imggg"/><br>
-        <label>Product name:</label><input ng-model="piece.title" type="text" readonly="true" id="Pname" name="Pname"><br>
-        <label>Ammount of products:</label><input type="number" name="calculation" ng-model="piece.Ahuzim"><br>
+        <img ng-if="piece.title && !new" ng-src="assets\img\{{piece.title}}.jpg" alt="Scanned image"  style="width:100px;" id="imggg"/><br>
+        <label>Product name:</label><input ng-model="piece.title" type="text"  id="Pname" name="Pname"><br>
+        <label>Ammount of facing products:</label><input type="number" name="calculation" ng-model="piece.Ahuzim"><br>
         <label>Shelf ID:</label><input type="number" name="shelfId" ng-model="piece.shelf">      <br>
         <br>
-        <!--<form><label>Shelf empty</label><input type="radio" ng-model="piece.empty" name="empty" value="Yes" > Yes<input type="radio" ng-model="piece.empty" name="empty" value="No" checked > No</form>-->
+        <!--readonly="true"<form><label>Shelf empty</label><input type="radio" ng-model="piece.empty" name="empty" value="Yes" > Yes<input type="radio" ng-model="piece.empty" name="empty" value="No" checked > No</form>-->
         <a class="button alert" ng-click="deletePiece(piece.temp_id)">Delete this product</a>
 
         <hr>

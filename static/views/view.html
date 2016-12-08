@@ -32,7 +32,7 @@
           <td>
             {{piece.shelf}}</td>
       </table>
-      <br> <img ng-src="assets/img/{{piece.title}}.jpg" alt="img" style="width:100px;"/>
+      <br> <img ng-if="piece.title" ng-src="assets/img/{{piece.title}}.jpg" alt="img" style="width:100px;"/>
         <hr>
 
 

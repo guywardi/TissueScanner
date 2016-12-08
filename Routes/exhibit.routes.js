@@ -30,22 +30,22 @@ var routes = function(Exhibit) {
   });
 
   exhibitRouter.route('/:id')
-    //exhibitRouter.route('/:exhibitId')
+    exhibitRouter.route('/:exhibitId')
     .get(function(req, res) {
       res.json(req.exhibit);
     })
     //put changes qrUrl and Content
     .put(passport.authenticate('jwt', {
       session: false
-
     }), function(req, res) {
-      //req.exhibit= req.body;
-      console.log("HERE??");
+
+      req.exhibit= req.body;
       req.exhibit.title = req.body.title;
       req.exhibit.store = req.body.store;
       req.exhibit.content = req.body.content;
+      console.log(req.exhibit.content);
       console.log("SAVING TEST!!");
-      console.log(exhibit.content);
+      //console.log(exhibit.content);
       req.exhibit.save(function(err) {
         if (err)
           res.status(500).send(err);
