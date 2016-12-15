@@ -129,28 +129,12 @@ var pms = angular.module('qrms', ['ui.router'])
 
 $scope.scanTime = 1;
 
-//CALANDER
-//  $scope.myDate = new Date();
-
-  //$scope.minDate = new Date(
-    //  $scope.myDate.getFullYear(),
-      //$scope.myDate.getMonth() - 2,
-      //$scope.myDate.getDate());
-
-//END CALANDER
-//$scope.image;
   $rootScope.auth();
   var takePicture;
   var item_id;
   var nana;
 
-/*  $scope.$watch("image", function(newValue, oldValue) {
-   // Do anything you want here
-   console.log("CHANGEE");
-   console.log(newValue);
-   //$scope.scanImage(newValue);
-  })
-*/
+  //Scanning the product and displaying the right image and name by the barcode scanned
     $scope.scanImage = function () {
       _.findIndex($scope.exhibit.content, function(piece) {
         var fornow = "te" + piece.temp_id;
@@ -160,11 +144,14 @@ $scope.scanTime = 1;
     takePicture = document.querySelector("."+fornow);
     //takePicture = document.querySelector(".shoot");
     console.log(takePicture);
-  })
+
 
 
     //Hide because of new image coming from scan
-document.getElementById("imggg")
+    if (document.getElementById("imggg") != null) {
+      document.getElementById("imggg").style.display = "none";
+    }
+
 var showPicture = document.createElement("img");
     Result = document.querySelector("#error_scan");
     var canvas = document.getElementById("barcode_image");
@@ -183,7 +170,6 @@ var showPicture = document.createElement("img");
                   // Scanned ID
         var id = tempArray.join();
         console.log(id);
-        _.findIndex($scope.exhibit.content, function(piece) {
         if (id == 7316970152117)
         {
           document.getElementById("lambiwc").style.display = "block";
@@ -193,8 +179,7 @@ var showPicture = document.createElement("img");
           document.getElementById("lotuswc").style.display = "none";
           document.getElementById("Lotus-Emilia").style.display = "none";
           nana = "Lambi-wc-paperi-6rl";
-          //$("#Pname").val(nana);
-          document.getElementById("Pname").value = nana
+          $("#Pname").val(nana);
         }
         else if(id == 6414301011049)
         {
@@ -216,8 +201,7 @@ var showPicture = document.createElement("img");
           document.getElementById("pirkkawc").style.display = "none";
           document.getElementById("lotuswc").style.display = "none";
           document.getElementById("Lotus-Emilia").style.display = "none";
-
-            document.getElementById(piece.temp_id).value = nana
+          $("#Pname").val(nana);
         }
         else if(id == 6410405174925)
         {
@@ -239,7 +223,7 @@ var showPicture = document.createElement("img");
           document.getElementById("pirkkawc").style.display = "none";
           document.getElementById("lotuswc").style.display = "block";
           document.getElementById("Lotus-Emilia").style.display = "none";
-          $("#Pname+$scope.scanTime").val(nana);
+          $("#Pname").val(nana);
         }
         else if(id == 6413200340205)
         {
@@ -252,9 +236,7 @@ var showPicture = document.createElement("img");
           document.getElementById("Lotus-Emilia").style.display = "block";
           $("#Pname").val(nana);
         }
-
           piece.title = nana;
-        })
 
                   // If the page is main
         /*if($.mobile.path.get() == "" || $.mobile.path.get() == "to_choose") {
@@ -342,12 +324,13 @@ console.log("HERE IT IS")
       };
     }
 
-
+  })
 }
+//END of scanning code
 
 
 
-
+// option list of stores
   $scope.exhibit;
   $scope.statusMessage;
   $scope.stores = [
@@ -362,6 +345,7 @@ console.log("HERE IT IS")
 
  $scope.itemList = [];
 
+//watcher for change of store
 $scope.changedValue = function(item) {
   console.log(item);
   console.log(name);
@@ -369,11 +353,11 @@ $scope.changedValue = function(item) {
    console.log("Changed!!");
 
  }
+ //watcher for date change
  $scope.changedDate = function(item) {
     var  mydate = new Date(date.value);
     var dass = (mydate.getMonth() + 1) + '/' + mydate.getDate() + '/' +  mydate.getFullYear();
   $scope.exhibit.myDate =  dass;
-//$scope.exhibit.myDate = item;
   }
 
   //making a new one or editing old?
@@ -393,7 +377,7 @@ $scope.changedValue = function(item) {
     $scope.exhibit = {title: "",store: "",myDate: "" , content: []}; //create fresh main object
   }
 
-
+//Calculation
 $scope.saveCal = function(){
        _.findIndex($scope.exhibit.content, function(piece) {
       console.log("AHUZIM");
@@ -559,17 +543,17 @@ $scope.saveCal = function(){
 
 //PRINT
 .controller('PrintCtrl', ['$scope', '$rootScope', '$state', 'restcli', function($scope, $rootScope, $state, restcli) {
-
+/*
   $rootScope.auth();
 
   $scope.exhibit;
 
   restcli.getExhibit($state.params.id).success(function(data, status){
-    $scope.exhibit = data;
-    /* global jQuery (comment for c9 IDE) */
+    $scope.exhibit = data; 
+    /* global jQuery (comment for c9 IDE) *
     jQuery('#qrcode').qrcode({width: 500, height:500, text: "http://museoapi-vwnb.c9users.io/#/view/"+$state.params.id});
   });
-
+*/
 
 }])
 

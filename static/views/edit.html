@@ -15,7 +15,8 @@
 
   <div class="small-9 columns" style="margin-left:60px;">
   <div class="callout success">
-  <h2 class="text-center">Edit Store</h2>
+  <h2 ng-if="!new" class="text-center">Edit Store</h2>
+  <h2 ng-if="new" class="text-center">Add new Store</h2>
   <label for="date">Date</label><input ng-model="example.value" ng-change="changedDate(example.value)" value="05-05-2000" type="date" id="date" required</input><br>
   <label for="storeID">Store id:</label><input ng-model="exhibit.title" type="text" id="storeID" required></input>
   <label for="storeType">Store type:</label><select ng-model="exhibit.store" ng-options="item as item.name for item in stores track by item.name" id="storeType"  ng-change="changedValue(exhibit.store)" ><option value=''>{{exhibit.store}}</option></select>
@@ -55,6 +56,7 @@
         <hr>
 
          <p ng-if="exhibit._id"><a class="button warning" ui-sref="view({id: exhibit._id})">Preview public view</a>   <a class="button" ui-sref="list">Back to store listing</a></p>
+         <a class="button" ng-if="new" ui-sref="list">Cancel</a>
         <a class="button" ng-if="!new" ng-click="saveExhibit()">Save</a>
         <a class="button warning" ng-if="new" ng-click="newExhibit()">Save</a>
         <p>{{statusMessage}}</p>
